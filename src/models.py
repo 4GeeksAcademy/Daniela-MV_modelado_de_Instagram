@@ -22,3 +22,20 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
+class Comment(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    comment_text: Mapped[str] = mapped_column(String(60), unique=True, nullable=False)
+    author_id: Mapped[int] = mapped_column(nullable=False)
+    post_id: Mapped[int] = mapped_column(nullable=False)
+    
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "comment_text": self.comment_text,
+            "author_id": self.author_id,
+             "post_id": self.post_id,
+        }
+
+
